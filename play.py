@@ -1,6 +1,9 @@
+#TODO: Dynamic programming approach currently only works with endgame
+# scenarios. Restructure so it can be useful in intermediary scenarios.
+# Alternatively, do away with it and rely only on a better heuristic.
+#TODO: Minimax optimization/better heuristic
 #TODO: Make more robust (bad input, full column, etc)
 #TODO: Graphical interface
-#TODO: Minimax optimization/better heuristic
 #TODO: Randomized Minimax among equal-value states
 #TODO: Less hardcoding in this file
 #TODO: Make Minimax cleaner (more understandable)
@@ -10,7 +13,7 @@ import lib.minimax as minimax
 
 _BOARD_HEIGHT = 7
 _BOARD_WIDTH  = 7
-_DEPTH        = 5
+_DEPTH        = 7
 FOOTER   = ("   " + "   ".join([str(x+1) for x in range(_BOARD_WIDTH)])
            +"\n")
 OPPOSITE = {
@@ -19,6 +22,7 @@ OPPOSITE = {
 }
 
 def main():
+    memory = {}
     board = core.Board(_BOARD_HEIGHT, _BOARD_WIDTH)
     token = "O"
     print(str(board) + "\n" + FOOTER)
@@ -29,7 +33,7 @@ def main():
         if token == "O":
             col = int(input()) - 1
         else:
-            col = minimax.minimax(board, token, _DEPTH, False)[1]
+            col = minimax.minimax(board, token, _DEPTH, False, memory)[1]
         board.play_token(token, col)
         print("\n" + str(board) + "\n" + FOOTER)
         last_play_col = col
