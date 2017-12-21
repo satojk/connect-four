@@ -1,6 +1,3 @@
-#TODO: Dynamic programming approach currently only works with endgame
-# scenarios. Restructure so it can be useful in intermediary scenarios.
-# Alternatively, do away with it and rely only on a better heuristic.
 #TODO: Minimax optimization/better heuristic
 #TODO: Make more robust (bad input, full column, etc)
 #TODO: Graphical interface
@@ -13,7 +10,7 @@ import lib.minimax as minimax
 
 _BOARD_HEIGHT = 7
 _BOARD_WIDTH  = 7
-_DEPTH        = 7
+_DEPTH        = 5
 FOOTER   = ("   " + "   ".join([str(x+1) for x in range(_BOARD_WIDTH)])
            +"\n")
 OPPOSITE = {
@@ -30,7 +27,7 @@ def main():
         token = OPPOSITE[token]
         print("It's {}'s turn. Which column do you want".format(token)
              +" to play? Enter 0 to undo last move.")
-        if token == "O":
+        if token == "X":
             col = int(input()) - 1
         else:
             col = minimax.minimax(board, token, _DEPTH, False, memory)[1]
