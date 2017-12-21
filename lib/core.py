@@ -1,10 +1,4 @@
-# TODO: make more robust.
-# TODO: make graphical interface.
 import numpy as np
-
-_BOARD_HEIGHT = 7
-_BOARD_WIDTH  = 7
-FOOTER = "   " + "   ".join([str(x+1) for x in range(_BOARD_WIDTH)]) + "\n"
 
 class Board:
 
@@ -15,6 +9,18 @@ class Board:
 
     def __repr__(self):
         return str(self.board)
+
+    def get_height(self):
+        return self.height
+
+    def get_width(self):
+        return self.width
+
+    def get_board(self):
+        return self.board
+
+    def col_is_full(self, col):
+        return self.board[0][col] != "_"
 
     def is_winner(self, token):
         seqs = []
@@ -54,38 +60,9 @@ class Board:
 
     def unplay_token(self, token, col):
         for i in range(self.height):
-            if self.board[self.height-i-1][col] == token:
-                self.board[self.height-i-1][col] = "_"
+            if self.board[i][col] == token:
+                self.board[i][col] = "_"
                 break
         else:
             raise Exception("This token is not the last in this column")
-
-class Game(Board):
-
-    def __init__(self, height, width):
-        super().__init__(height, width)
-        print(str(self) + "\n" + FOOTER)
-
-    def __repr__(self):
-        return str(self.board)
-
-    def play_turns(self):
-        for token in ["X", "O"]:
-            print("It's {}'s turn. Which column do you want to play? Enter 0 to undo last move.".format(token))
-            col = int(input()) - 1
-            self.play_token(token, col)
-            print("\n" + str(self) + "\n" + FOOTER)
-            if self.is_winner(token):
-                print("{} has won the game!".format(token))
-                return False
-            last_play_col = col
-        return True
-
-def main():
-    game = Game(_BOARD_HEIGHT, _BOARD_WIDTH)
-    while game.play_turns():
-        pass
-
-if __name__ == "__main__":
-    main()
 
