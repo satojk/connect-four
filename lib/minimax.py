@@ -6,7 +6,7 @@ OPPOSITE = {
     "O": "X"
 }
 
-def minimax(board, token, depth, flipswitch, memory):
+def minimax(board, token, depth, flipswitch):
     if board.is_winner(token): # Base cases: game is over or depth == 0
         return (float("inf"),)
     elif board.is_winner(OPPOSITE[token]):
@@ -24,11 +24,16 @@ def minimax(board, token, depth, flipswitch, memory):
                         token_to_play = token
                     board.play_token(token_to_play, potential_play)
                     vals.append((minimax(board, token, depth-1,
-                                         not flipswitch, memory)[0],
-                                 potential_play))
+                                 not flipswitch)[0], potential_play))
                     board.unplay_token(token_to_play, potential_play)
             if flipswitch:
-                return min(vals)
+                if len(vals) == 0: # Tie case - no possible moves
+                    return (-999,)
+                else:
+                    return min(vals)
             else:
-                return max(vals)
+                if len(vals) == 0: # Tie case - no possible moves
+                    return (999,)
+                else:
+                    return max(vals)
 

@@ -22,6 +22,17 @@ class Board:
     def col_is_full(self, col):
         return self.board[0][col] != "_"
 
+    def is_tied(self):
+        tie = True
+        for row in self.board:
+            for cell in row:
+                if cell == "_":
+                    tie = False
+                    break
+            if tie == False:
+                break
+        return tie
+
     def is_winner(self, token):
         seqs = []
         is_winner = False

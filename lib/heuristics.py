@@ -72,8 +72,6 @@ def potential(board, token):
         for j in range(board.get_width()):
             seqs.append((board.get_board()[i:i+4,j]).tolist())
     for seq in seqs:
-        if OPPOSITE[token] in seq:
-            net_pot -= 1
         if token in seq:
             net_pot += 1
     return net_pot
