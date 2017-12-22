@@ -30,7 +30,8 @@ def main():
         if token == "X":
             col = int(input()) - 1
         else:
-            col = minimax.minimax(board, token, _DEPTH, False, memory)[1]
+            col = minimax.minimax(board, token, _DEPTH,
+                                  False, memory)[1]
         board.play_token(token, col)
         print("\n" + str(board) + "\n" + FOOTER)
         last_play_col = col

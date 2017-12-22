@@ -13,7 +13,7 @@ def minimax(board, token, depth, flipswitch, memory):
         return (float("-inf"),)
     else:
         if depth == 0:
-            return (heuristics.adjacencies(board, token),)
+            return (heuristics.potential(board, token),)
         else: # Recursive case: take minimax of child nodes.
             vals = []
             for potential_play in range(board.get_width()):

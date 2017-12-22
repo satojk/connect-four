@@ -50,3 +50,31 @@ def adjacencies(board, token):
                     adjacencies += 1
     return adjacencies
 
+def potential(board, token):
+    net_pot = 0
+    seqs = []
+    for i in range(board.get_height()-3):
+        for j in range(board.get_width()):
+            if j >= 3:
+                seqs.append([board.get_board()[i]  [j],
+                             board.get_board()[i+1][j-1],
+                             board.get_board()[i+2][j-2],
+                             board.get_board()[i+3][j-3]])
+            if j <= (board.get_width()-4):
+                seqs.append([board.get_board()[i]  [j],
+                             board.get_board()[i+1][j+1],
+                             board.get_board()[i+2][j+2],
+                             board.get_board()[i+3][j+3]])
+    for i in range(board.get_height()):
+        for j in range(board.get_width()-3):
+            seqs.append((board.get_board()[i][j:j+4]).tolist())
+    for i in range(board.get_height()-3):
+        for j in range(board.get_width()):
+            seqs.append((board.get_board()[i:i+4,j]).tolist())
+    for seq in seqs:
+        if OPPOSITE[token] in seq:
+            net_pot -= 1
+        if token in seq:
+            net_pot += 1
+    return net_pot
+
