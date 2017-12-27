@@ -7,10 +7,11 @@
 
 import lib.core as core
 import lib.minimax as minimax
+import lib.alphabeta as alphabeta
 
 _BOARD_HEIGHT = 6
 _BOARD_WIDTH  = 7
-_DEPTH        = 5
+_DEPTH        = 7
 FOOTER   = ("   " + "   ".join([str(x+1) for x in range(_BOARD_WIDTH)])
            +"\n")
 OPPOSITE = {
@@ -29,8 +30,9 @@ def play_from_input(board, token):
             print("\nThat is not a valid play!\n")
 
 def play_from_minimax(board, token):
-    col = minimax.minimax(board, token, _DEPTH, False)[1]
-    board.play_token(token, col)
+    col = alphabeta.minimax(board, token, _DEPTH, False,
+                            (float("-inf"),), (float("inf"),))
+    board.play_token(token, col[1])
 
 def main():
     memory = {}
