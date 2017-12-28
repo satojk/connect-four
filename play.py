@@ -31,8 +31,13 @@ def play_from_input(board, token):
 
 def play_from_minimax(board, token):
     col = alphabeta.minimax(board, token, _DEPTH, False,
-                            (float("-inf"),), (float("inf"),))
-    board.play_token(token, col[1])
+                            (float("-inf"),), (float("inf"),))[1]
+    while True:
+        try:
+            board.play_token(token, col)
+            break
+        except Exception:
+            col += 1
 
 def main():
     memory = {}
