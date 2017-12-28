@@ -18,8 +18,12 @@ def max_val(val_play1, val_play2):
     else:
         return val_play1
 
-def minimax(board, token, depth, is_minimizing, alpha, beta):
-    if board.is_winner(token): # Base cases: game is over or depth == 0
+def minimax(board, token, depth, is_minimizing, alpha, beta, memory):
+    args = (board.get_board(), depth, alpha, beta)
+    return_val = memory.consult(*args)
+    if return_val:
+        pass
+    elif board.is_winner(token): # Base cases: game is over or depth == 0
         return_val = (float("inf"),0)
     elif board.is_winner(OPPOSITE[token]):
         return_val = (float("-inf"),0)
@@ -35,7 +39,8 @@ def minimax(board, token, depth, is_minimizing, alpha, beta):
                                          potential_play)
                         next_val = (minimax(board, token, depth-1,
                                             not is_minimizing, alpha,
-                                            beta)[0], potential_play)
+                                            beta, memory)[0],
+                                    potential_play)
                         return_val = min_val(return_val, next_val)
                         board.unplay_token(OPPOSITE[token],
                                            potential_play)
@@ -50,12 +55,14 @@ def minimax(board, token, depth, is_minimizing, alpha, beta):
                                          potential_play)
                         next_val = (minimax(board, token, depth-1,
                                             not is_minimizing, alpha,
-                                            beta)[0], potential_play)
+                                            beta, memory)[0],
+                                    potential_play)
                         return_val = max_val(return_val, next_val)
                         board.unplay_token(token,
                                            potential_play)
                         alpha = max(alpha, return_val)
                         if alpha >= beta:
                             break
+    memory.write(*args, return_val)
     return return_val
 

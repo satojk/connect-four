@@ -30,8 +30,9 @@ def play_from_input(board, token):
             print("\nThat is not a valid play!\n")
 
 def play_from_minimax(board, token):
+    mem = core.Memory()
     col = alphabeta.minimax(board, token, _DEPTH, False,
-                            (float("-inf"),), (float("inf"),))[1]
+                            (float("-inf"),), (float("inf"),), mem)[1]
     while True:
         try:
             board.play_token(token, col)
@@ -40,7 +41,6 @@ def play_from_minimax(board, token):
             col += 1
 
 def main():
-    memory = {}
     board = core.Board(_BOARD_HEIGHT, _BOARD_WIDTH)
     token = "O"
     print(str(board) + "\n" + FOOTER)

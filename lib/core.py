@@ -77,3 +77,24 @@ class Board:
         else:
             raise Exception("This token is not the last in this column")
 
+class Memory:
+
+    def __init__(self):
+        self.dict = {}
+
+    def __repr__(self):
+        return str(self.dict)
+
+    def consult(self, board, depth, alpha, beta):
+        try:
+            tuplified_board = tuple([tuple(row) for row in board])
+            key = (tuplified_board, depth, alpha, beta)
+            return self.dict[key]
+        except KeyError:
+            return False
+
+    def write(self, board, depth, alpha, beta, value):
+        tuplified_board = tuple([tuple(row) for row in board])
+        key = (tuplified_board, depth, alpha, beta)
+        self.dict[key] = value
+
