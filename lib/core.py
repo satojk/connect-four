@@ -8,7 +8,20 @@ class Board:
         self.width = width
 
     def __repr__(self):
-        return str(self.board)
+        outstr = (" " + "__"*self.width)[:-1]
+        outstr += "\n"
+        for row in self.board:
+            for cell in row:
+                outstr += "|"
+                if cell == "X":
+                    outstr += "\033[94mO\033[0m"
+                elif cell == "O":
+                    outstr += "\033[91mO\033[0m"
+                else:
+                    outstr += cell
+            outstr += "|"
+            outstr += "\n"
+        return outstr
 
     def get_height(self):
         return self.height

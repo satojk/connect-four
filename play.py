@@ -12,18 +12,23 @@ import lib.alphabeta as alphabeta
 _BOARD_HEIGHT = 6
 _BOARD_WIDTH  = 7
 _DEPTH        = 7
-FOOTER   = ("   " + "   ".join([str(x+1) for x in range(_BOARD_WIDTH)])
+FOOTER   = (" " + " ".join([str(x+1) for x in range(_BOARD_WIDTH)])
            +"\n")
 OPPOSITE = {
     "X": "O",
     "O": "X"
 }
 
+COLOR = {
+    "X": "Blue",
+    "O": "Red"
+}
+
 def play_from_input(board, token):
     while True:
         try:
-            print("It's {}'s turn. Which column do you want".format(token)
-                 +" to play? Enter 0 to undo last move.")
+            print("It's {}'s turn. Which column".format(COLOR[token])
+                 +" do you want to play? Enter 0 to undo last move.")
             board.play_token(token, int(input())-1)
             break
         except Exception:
@@ -42,15 +47,15 @@ def play_from_minimax(board, token):
 
 def main():
     board = core.Board(_BOARD_HEIGHT, _BOARD_WIDTH)
-    token = "O"
-    print(str(board) + "\n" + FOOTER)
+    token = "X"
+    print(str(board) + FOOTER)
     while not board.is_winner(token):
         if board.is_tied():
             print("The game is tied!")
             token = "No one"
             break
         token = OPPOSITE[token]
-        if token == "X":
+        if token == "O":
             play_from_input(board, token)
         else:
             play_from_minimax(board, token)
