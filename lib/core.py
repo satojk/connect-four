@@ -42,7 +42,7 @@ class Board:
                 if cell == "_":
                     tie = False
                     break
-            if tie == False:
+            if not tie:
                 break
         return tie
 

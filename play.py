@@ -6,7 +6,6 @@
 #TODO: Space efficiency (e.g. when aggregating seqs)
 
 import lib.core as core
-import lib.minimax as minimax
 import lib.alphabeta as alphabeta
 
 _BOARD_HEIGHT = 6
@@ -39,7 +38,7 @@ def play_from_minimax(board, token):
     col = alphabeta.minimax(board, token, _DEPTH, False,
                             (float("-inf"),), (float("inf"),), mem)[1]
     while True:
-        try:
+        try: # In hopeless scenario, will play first available col
             board.play_token(token, col)
             break
         except Exception:
